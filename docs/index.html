@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Vitrine do tema WordPress sob medida para o consultório do Dr. Rafael Sukiennik: telas, design system e engenharia.">
+<link rel="icon" type="image/png" href="img/logo-mark.png">
+<title>Forever Young — Vitrine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+body { margin: 0; }
+[hidden] { display: none !important; }
+/* Layout: a dark "gallery wall" in the client's navy — the site's cream screens hang on it in device frames; gold carries every label and rule. */
+:root {
+  --wall: #121C2E;
+  --wall-2: #18253B;
+  --wall-3: #22324D;
+  --ink: #F3EDE3;
+  --ink-soft: #B9B3A8;
+  --ink-mute: #8A8780;
+  --gold: #C29A62;
+  --gold-deep: #B4894F;
+  --cream: #F6F1E9;
+  --navy: #1B2A41;
+  --line: rgba(243, 237, 227, 0.12);
+  --frame: #0B1220;
+
+  --f-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --f-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+body {
+  background: var(--wall);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--wall);
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; margin: 0; line-height: 1.12; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1240px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 720px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 0.9rem;
+  font-family: var(--f-mono); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
+}
+.eyebrow::after { content: ""; width: 2.4rem; height: 1px; background: currentColor; opacity: 0.7; }
+.lede { color: var(--ink-soft); max-width: 60ch; }
+.mono { font-family: var(--f-mono); font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ink-mute); }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--wall) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.8rem; }
+.mark { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; min-width: 0; }
+.mark img { width: 34px; height: 34px; border-radius: 50%; background: var(--cream); }
+.mark span { font-family: var(--f-display); font-size: 1.02rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.toc { display: flex; gap: 1.4rem; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.toc a { text-decoration: none; color: var(--ink-soft); transition: color 200ms; }
+.toc a:hover { color: var(--gold); }
+@media (max-width: 860px) { .toc { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: clamp(3rem, 7vw, 6rem) clamp(3rem, 6vw, 5rem); overflow: hidden; }
+.hero__grid { display: grid; gap: clamp(2.5rem, 5vw, 4rem); }
+.hero__copy { display: grid; gap: 1.4rem; max-width: 46rem; }
+.hero h1 { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 600; letter-spacing: -0.01em; }
+.hero h1 em { font-style: italic; font-weight: 500; color: var(--gold); }
+.hero__meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; }
+.hero__meta div { display: grid; }
+.hero__meta dt { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
+.hero__meta dd { margin: 0; font-size: 0.98rem; }
+
+.stage { position: relative; padding-bottom: clamp(2rem, 6vw, 4.5rem); }
+.stage .browser { width: 100%; }
+.stage .phone {
+  position: absolute; right: clamp(-6px, 2vw, 32px); bottom: 0;
+  width: clamp(120px, 21vw, 250px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.55);
+}
+
+/* ---------- Device frames ---------- */
+.browser {
+  border-radius: 12px; overflow: hidden; background: var(--frame);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.4);
+}
+.browser__bar { display: flex; align-items: center; gap: 0.9rem; padding: 0.6rem 0.85rem; background: #0F1828; }
+.dots { display: flex; gap: 6px; flex: none; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; background: #2C3A52; }
+.url {
+  flex: 1; min-width: 0; text-align: center; padding: 0.25rem 0.8rem; border-radius: 6px;
+  background: #18233A; font-family: var(--f-mono); font-size: 0.7rem; color: var(--ink-mute);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.browser__screen { background: var(--cream); }
+.browser__screen img { width: 100%; height: auto; }
+
+.phone {
+  border-radius: clamp(20px, 3.4vw, 40px); background: var(--frame);
+  padding: clamp(5px, 0.7vw, 9px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45);
+}
+.phone__screen { border-radius: clamp(15px, 2.7vw, 32px); overflow: hidden; background: var(--cream); position: relative; aspect-ratio: 390 / 844; max-width: 100%; }
+.phone__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* scrollable full-page frames */
+.scroller { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--gold-deep) transparent; }
+.browser .scroller { height: min(70vh, 640px); }
+.phone .phone__screen.scroller { aspect-ratio: 390 / 844; }
+.phone .phone__screen.scroller img { height: auto; object-fit: initial; }
+
+.zoom { cursor: zoom-in; border: 0; padding: 0; background: none; display: block; width: 100%; }
+
+/* ---------- Facts strip ---------- */
+.facts { border-block: 1px solid var(--line); background: var(--wall-2); }
+.facts .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.fact { padding: 1.6rem 1.2rem 1.6rem 0; display: grid; gap: 0.35rem; align-content: start; }
+.fact b { font-family: var(--f-display); font-weight: 500; font-size: 1.9rem; line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; }
+.fact span { font-size: 0.92rem; color: var(--ink-soft); }
+
+/* ---------- Sections ---------- */
+section.block { padding-block: clamp(4rem, 8vw, 7rem); }
+section.block + section.block { border-top: 1px solid var(--line); }
+.block__head { display: grid; gap: 1rem; margin-bottom: clamp(2rem, 4vw, 3.2rem); }
+.block__head h2 { font-size: clamp(2rem, 4vw, 3.1rem); }
+
+/* Full page: browser + phone side by side */
+.fullpage { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 900px) { .fullpage { grid-template-columns: minmax(0, 1fr) 300px; } }
+.fullpage figure { margin: 0; display: grid; gap: 0.8rem; min-width: 0; }
+.fullpage .phone { width: min(300px, 100%); margin-inline: auto; }
+figcaption { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--ink-soft); }
+
+/* Screens by section */
+.tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2rem; }
+.tab {
+  font: 500 0.8rem/1 var(--f-body); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.75rem 1.1rem; border-radius: 99px; border: 1px solid var(--line);
+  background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 200ms var(--ease);
+}
+.tab:hover { border-color: var(--gold); color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--wall); }
+.pane { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 900px) { .pane { grid-template-columns: minmax(0, 1fr) 240px; } }
+.pane .phone { width: min(240px, 70%); margin-inline: auto; }
+.pane__note { grid-column: 1 / -1; display: grid; gap: 0.4rem; max-width: 70ch; }
+.pane__note h3 { font-size: 1.35rem; }
+.pane__note p { color: var(--ink-soft); }
+
+/* Languages */
+.langs { display: grid; gap: 2rem; }
+@media (min-width: 900px) { .langs { grid-template-columns: 300px minmax(0, 1fr); align-items: center; } }
+.langs__pick { display: grid; gap: 0.6rem; }
+.lang {
+  display: grid; grid-template-columns: 3.2rem 1fr; align-items: center; gap: 0.2rem 0.9rem; text-align: start;
+  padding: 1rem 1.1rem; border-radius: 10px; border: 1px solid var(--line); background: transparent;
+  color: var(--ink); cursor: pointer; font: inherit; transition: all 200ms var(--ease);
+}
+.lang b { font-family: var(--f-mono); font-weight: 500; font-size: 0.85rem; color: var(--gold); grid-row: span 2; }
+.lang span { font-family: var(--f-display); font-size: 1.15rem; }
+.lang small { color: var(--ink-mute); font-size: 0.82rem; }
+.lang:hover { border-color: var(--gold); }
+.lang[aria-pressed="true"] { background: var(--wall-3); border-color: var(--gold); }
+.langs__view { min-width: 0; }
+.langs__view .browser__screen img { transition: opacity 300ms var(--ease); }
+.langs__note { margin-top: 1rem; }
+
+/* Design system */
+.ds { display: grid; gap: 1.2rem; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.ds > * { grid-column: span 12; min-width: 0; }
+@media (min-width: 900px) {
+  .ds .ds-colors { grid-column: span 7; }
+  .ds .ds-type { grid-column: span 5; }
+  .ds .ds-comp { grid-column: span 7; }
+  .ds .ds-icons { grid-column: span 5; }
+}
+.panel { border: 1px solid var(--line); border-radius: 14px; padding: clamp(1.2rem, 2.4vw, 1.8rem); background: var(--wall-2); display: grid; gap: 1.2rem; align-content: start; }
+.panel h3 { font-family: var(--f-mono); font-weight: 500; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 0.8rem; }
+.sw { display: grid; gap: 0.5rem; }
+.sw i { display: block; height: 76px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+.sw b { font-weight: 500; font-size: 0.92rem; }
+.sw code { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-mute); }
+
+.specimen { display: grid; gap: 0.3rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+.specimen:last-child { border-bottom: 0; padding-bottom: 0; }
+.specimen .big-serif { font-family: var(--f-display); font-size: 2.4rem; line-height: 1.05; }
+.specimen .big-sans { font-family: var(--f-body); font-size: 1.5rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+
+/* Live components rendered in the site's own skin */
+.site-skin { background: var(--cream); color: #3A3A3A; border-radius: 10px; padding: clamp(1rem, 3vw, 1.8rem); display: grid; gap: 1.4rem; }
+.site-skin .row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.sbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  font: 500 0.78rem/1 var(--f-body); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+  padding: 1rem 1.6rem; border-radius: 6px; border: 1.5px solid transparent; cursor: pointer;
+  transition: all 200ms var(--ease);
+}
+.sbtn svg { width: 17px; height: 17px; }
+.sbtn--primary { background: var(--gold-deep); color: #fff; }
+.sbtn--primary:hover { background: #9C7440; transform: translateY(-1px); }
+.sbtn--outline { border-color: var(--navy); color: var(--navy); background: transparent; }
+.sbtn--outline:hover { background: var(--navy); color: #fff; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.9rem; }
+.pcard {
+  background: #fff; border-radius: 14px; padding: 1.5rem 1.1rem; text-align: center; display: grid; gap: 0.55rem; justify-items: center;
+  box-shadow: 0 12px 30px rgba(27,42,65,0.08); transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+}
+.pcard:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(27,42,65,0.14); }
+.pcard svg, .pcard img { width: 3.6rem; height: 3.6rem; color: var(--gold-deep); object-fit: contain; }
+.pcard h4 { margin: 0.3rem 0 0; font-family: var(--f-display); font-weight: 600; color: var(--navy); font-size: 1rem; line-height: 1.25; }
+.pcard p { font-size: 0.85rem; line-height: 1.5; }
+
+.iconset { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 0.6rem; }
+.ic { display: grid; justify-items: center; gap: 0.45rem; padding: 0.9rem 0.3rem; border-radius: 10px; border: 1px solid var(--line); }
+.ic svg { width: 30px; height: 30px; color: var(--gold); }
+.ic span { font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-mute); }
+
+.motion { display: grid; gap: 0.8rem; }
+.motion__demo { display: flex; gap: 0.6rem; }
+.motion__demo i { flex: 1; height: 44px; border-radius: 8px; background: var(--wall-3); border: 1px solid var(--line); }
+.motion.is-playing .motion__demo i { animation: reveal 600ms var(--ease) both; }
+@keyframes reveal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.ghost { justify-self: start; font: 500 0.78rem/1 var(--f-body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); background: none; border: 1px solid var(--gold); border-radius: 99px; padding: 0.6rem 1rem; cursor: pointer; }
+.ghost:hover { background: var(--gold); color: var(--wall); }
+
+/* Engineering */
+.eng { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.eng article { background: var(--wall); padding: 1.6rem; display: grid; gap: 0.7rem; align-content: start; }
+.eng h3 { font-size: 1.25rem; }
+.eng ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.45rem; color: var(--ink-soft); font-size: 0.95rem; }
+.eng li { padding-left: 1.1rem; position: relative; }
+.eng li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 6px; height: 1px; background: var(--gold); }
+.eng code { font-family: var(--f-mono); font-size: 0.82em; color: var(--ink); }
+
+/* Status */
+.status { display: grid; gap: 1.2rem; }
+@media (min-width: 900px) { .status { grid-template-columns: 1fr 1fr; } }
+.status .panel ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.status li { display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; align-items: baseline; color: var(--ink-soft); }
+.pill { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 99px; white-space: nowrap; }
+.pill--done { background: rgba(122, 176, 132, 0.16); color: #9CCBA5; }
+.pill--next { background: rgba(194, 154, 98, 0.16); color: var(--gold); }
+
+footer.end { border-top: 1px solid var(--line); padding-block: 2.4rem calc(2.4rem + env(safe-area-inset-bottom, 0px)); }
+footer.end .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; color: var(--ink-mute); font-size: 0.9rem; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; z-index: 50; background: rgba(6, 10, 18, 0.92);
+  display: grid; place-items: center; overflow: auto;
+  padding: calc(3.5rem + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(1.5rem + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.lightbox img { max-width: min(1440px, 100%); max-height: none; border-radius: 8px; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+.lightbox img.is-tall { max-width: min(430px, 100%); }
+.lightbox__close {
+  position: fixed; top: calc(0.9rem + env(safe-area-inset-top, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+  font: 500 0.8rem/1 var(--f-body); letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--gold); color: var(--wall); border: 0; border-radius: 99px; padding: 0.7rem 1.1rem; cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="mark" href="#inicio"><img src="img/logo-mark.png" alt="" width="34" height="34"><span>Forever Young · Vitrine do projeto</span></a>
+    <nav class="toc" aria-label="Seções">
+      <a href="#pagina">Página</a>
+      <a href="#telas">Telas</a>
+      <a href="#idiomas">Idiomas</a>
+      <a href="#design">Design</a>
+      <a href="#engenharia">Engenharia</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <span class="eyebrow">Site institucional · Medicina Estética &amp; Regenerativa</span>
+        <h1>Dr. Rafael Sukiennik, <em>Forever&nbsp;Young</em></h1>
+        <p class="lede">Tema WordPress feito do zero, sem page builder, para um consultório de medicina estética. A identidade da clínica (creme, azul-marinho e dourado) virou um design system em CSS puro, com home em três idiomas e layout espelhado para o hebraico.</p>
+        <dl class="hero__meta">
+          <div><dt>Plataforma</dt><dd>WordPress · tema próprio</dd></div>
+          <div><dt>Idiomas</dt><dd>PT · EN · HE (RTL)</dd></div>
+          <div><dt>Fase</dt><dd>Fundação + Home</dd></div>
+        </dl>
+      </div>
+
+      <div class="stage">
+        <div class="browser">
+          <div class="browser__bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">drrafaelsukiennik · /</span></div>
+          <button class="browser__screen zoom" data-full="img/desk-hero-pt.jpg" aria-label="Ampliar tela desktop da home"><img src="img/desk-hero-pt.jpg" alt="Home do site em desktop: título Medicina que realça a sua melhor versão, ao lado da foto do médico" width="1440" height="900"></button>
+        </div>
+        <div class="phone">
+          <button class="phone__screen zoom" data-full="img/mob-hero-pt.jpg" aria-label="Ampliar tela mobile da home"><img src="img/mob-hero-pt.jpg" alt="Home do site no celular" width="1170" height="2532"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div class="wrap">
+      <div class="fact"><b>0</b><span>plugins de page builder: só PHP, CSS e JS do tema</span></div>
+      <div class="fact"><b>3</b><span>idiomas na mesma página, com hebraico da direita para a esquerda</span></div>
+      <div class="fact"><b>390px</b><span>largura real de iPhone testada, não só breakpoints</span></div>
+      <div class="fact"><b>8</b><span>procedimentos no grid, cada um com ícone próprio de traço fino</span></div>
+      <div class="fact"><b>~100</b><span>linhas de JavaScript, sem jQuery nem dependências</span></div>
+    </div>
+  </div>
+
+  <section class="block" id="pagina">
+    <div class="wrap">
+      <div class="block__head">
+        <span class="eyebrow">A página inteira</span>
+        <h2>Role dentro das telas</h2>
+        <p class="lede">A home completa, do cabeçalho ao rodapé, capturada do tema renderizado em 1440 × 900 e em 390 × 844. Role dentro de cada moldura para percorrer a página.</p>
+      </div>
+      <div class="fullpage">
+        <figure>
+          <div class="browser">
+            <div class="browser__bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">drrafaelsukiennik · / · 1440px</span></div>
+            <div class="browser__screen scroller" tabindex="0" aria-label="Home completa em desktop, área rolável"><img src="img/desk-full-pt.jpg" alt="Home completa em desktop: hero, sobre, procedimentos, chamada para agendamento e rodapé" width="1440" height="3962" loading="lazy"></div>
+          </div>
+          <figcaption><span>Desktop</span><span class="mono">1440 × 3962 px</span></figcaption>
+        </figure>
+        <figure>
+          <div class="phone">
+            <div class="phone__screen scroller" tabindex="0" aria-label="Home completa no celular, área rolável"><img src="img/mob-full-pt.jpg" alt="Home completa no celular" width="780" height="14028" loading="lazy"></div>
+          </div>
+          <figcaption><span>Mobile</span><span class="mono">390 × 7014 px</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="telas">
+    <div class="wrap">
+      <div class="block__head">
+        <span class="eyebrow">Telas por seção</span>
+        <h2>Cada bloco da home, nos dois tamanhos</h2>
+        <p class="lede">Clique em qualquer tela para ampliar.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Seções da home">
+        <button class="tab" role="tab" id="tab-hero" aria-selected="true" aria-controls="pane">Hero</button>
+        <button class="tab" role="tab" id="tab-sobre" aria-selected="false" aria-controls="pane">Sobre</button>
+        <button class="tab" role="tab" id="tab-proc" aria-selected="false" aria-controls="pane">Procedimentos</button>
+        <button class="tab" role="tab" id="tab-cta" aria-selected="false" aria-controls="pane">Agendamento e rodapé</button>
+        <button class="tab" role="tab" id="tab-menu" aria-selected="false" aria-controls="pane">Menus</button>
+      </div>
+
+      <div class="pane" id="pane" role="tabpanel" aria-labelledby="tab-hero">
+        <div class="browser">
+          <div class="browser__bar"><span class="dots"><i></i><i></i><i></i></span><span class="url" id="pane-url">drrafaelsukiennik · /</span></div>
+          <button class="browser__screen zoom" id="pane-desk-btn" data-full="img/desk-hero-pt.jpg" aria-label="Ampliar tela desktop"><img id="pane-desk" src="img/desk-hero-pt.jpg" alt="" width="1440" height="900"></button>
+        </div>
+        <div class="phone">
+          <button class="phone__screen zoom" id="pane-mob-btn" data-full="img/mob-hero-pt.jpg" aria-label="Ampliar tela mobile"><img id="pane-mob" src="img/mob-hero-pt.jpg" alt="" width="1170" height="2532"></button>
+        </div>
+        <div class="pane__note">
+          <h3 id="pane-title">Hero</h3>
+          <p id="pane-text"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="idiomas">
+    <div class="wrap">
+      <div class="block__head">
+        <span class="eyebrow">Internacionalização</span>
+        <h2>Uma página, três idiomas, duas direções</h2>
+        <p class="lede">O consultório atende pacientes brasileiros, de língua inglesa e israelenses. O tema troca o idioma pelo seletor do cabeçalho e, em hebraico, espelha o layout inteiro com <code class="mono">dir="rtl"</code> e propriedades lógicas de CSS.</p>
+      </div>
+      <div class="langs">
+        <div class="langs__pick" role="group" aria-label="Escolher idioma">
+          <button class="lang" data-lang="pt" aria-pressed="true"><b>PT</b><span>Português</span><small>Idioma padrão do conteúdo</small></button>
+          <button class="lang" data-lang="en" aria-pressed="false"><b>EN</b><span>English</span><small>Mesmos templates, textos em inglês</small></button>
+          <button class="lang" data-lang="he" aria-pressed="false"><b>HE</b><span>עברית</span><small>Layout espelhado, da direita para a esquerda</small></button>
+        </div>
+        <div class="langs__view">
+          <div class="browser">
+            <div class="browser__bar"><span class="dots"><i></i><i></i><i></i></span><span class="url" id="lang-url">drrafaelsukiennik · /?lang=pt</span></div>
+            <button class="browser__screen zoom" id="lang-btn" data-full="img/desk-hero-pt.jpg" aria-label="Ampliar tela no idioma escolhido"><img id="lang-img" src="img/desk-hero-pt.jpg" alt="Hero do site no idioma escolhido" width="1440" height="900"></button>
+          </div>
+          <p class="mono langs__note" id="lang-note">Seletor de idioma no canto do cabeçalho. Sem plugin de tradução: um dicionário em <code>inc/i18n.php</code>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="design">
+    <div class="wrap">
+      <div class="block__head">
+        <span class="eyebrow">Design system</span>
+        <h2>Tokens, tipografia e componentes</h2>
+        <p class="lede">Tudo sai de variáveis CSS em <code class="mono">assets/css/main.css</code>. Os componentes abaixo são HTML vivo, com o mesmo estilo do tema: passe o mouse nos botões e nos cards.</p>
+      </div>
+
+      <div class="ds">
+        <div class="panel ds-colors">
+          <h3>Cores</h3>
+          <div class="swatches">
+            <div class="sw"><i style="background:#F6F1E9"></i><b>Creme</b><code>--color-cream · #F6F1E9</code></div>
+            <div class="sw"><i style="background:#1B2A41"></i><b>Marinho</b><code>--color-navy · #1B2A41</code></div>
+            <div class="sw"><i style="background:#B4894F"></i><b>Dourado</b><code>--color-gold · #B4894F</code></div>
+            <div class="sw"><i style="background:#9C7440"></i><b>Dourado escuro</b><code>--color-gold-dark · #9C7440</code></div>
+            <div class="sw"><i style="background:#3A3A3A"></i><b>Texto</b><code>--color-body · #3A3A3A</code></div>
+            <div class="sw"><i style="background:#FFFFFF"></i><b>Branco</b><code>--color-white · #FFFFFF</code></div>
+          </div>
+        </div>
+
+        <div class="panel ds-type">
+          <h3>Tipografia</h3>
+          <div class="specimen"><span class="big-serif">Medicina que realça</span><span class="mono">Playfair Display · 500–700 · títulos</span></div>
+          <div class="specimen"><span class="big-sans">Agendar consulta</span><span class="mono">Jost · 400–600 · texto, menus e botões</span></div>
+        </div>
+
+        <div class="panel ds-comp">
+          <h3>Componentes</h3>
+          <div class="site-skin">
+            <div class="row">
+              <span class="sbtn sbtn--primary" tabindex="0"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 12a8.5 8.5 0 1 1 3.96 7.19 1 1 0 0 0-.82-.11l-2.88.86 1.08-2.54a1 1 0 0 0-.07-.92A8.46 8.46 0 0 1 3.5 12ZM12 1.5A10.5 10.5 0 0 0 2.8 17.07L1.08 21.1a1 1 0 0 0 1.2 1.35l4.5-1.34A10.5 10.5 0 1 0 12 1.5Zm2.29 12.68-1.31.93a7.6 7.6 0 0 1-3.6-3.64l.83-.71a1 1 0 0 0 .24-1.23L9.38 7.53a1 1 0 0 0-1.54-.28l-.31.27c-.76.66-1.21 1.75-.84 2.85.39 1.14 1.21 2.94 2.9 4.63 1.81 1.81 3.65 2.53 4.73 2.8.87.23 1.69-.07 2.27-.55l.59-.48a1 1 0 0 0-.12-1.63l-1.68-1a1 1 0 0 0-1.09.04Z"/></svg>Agendar consulta</span>
+              <span class="sbtn sbtn--outline" tabindex="0">Conheça os procedimentos</span>
+            </div>
+            <div class="cards">
+              <div class="pcard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 3.5h5"/><path d="M10.5 3.5v3.2h3V3.5"/><rect x="9.3" y="6.7" width="5.4" height="7.3" rx="0.9"/><path d="M9.6 9.4h4.8M9.6 11.7h4.8"/><path d="M12 14v6.5"/></svg><h4>Botox</h4><p>Suaviza linhas de expressão com resultados naturais.</p></div>
+              <div class="pcard"><img src="img/icon-skinbooster.png" alt=""><h4>Skinbooster</h4><p>Hidratação profunda para uma pele mais viçosa.</p></div>
+              <div class="pcard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5c3.2 4.2 5.7 8 5.7 11.2a5.7 5.7 0 1 1-11.4 0c0-3.2 2.5-7 5.7-11.2Z"/><circle cx="12" cy="15" r="1.7" fill="currentColor" stroke="none"/></svg><h4>Terapia com Plasma (PRP)</h4><p>Regeneração celular com o próprio plasma do paciente.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel ds-icons">
+          <h3>Ícones de traço · SVG inline</h3>
+          <div class="iconset" id="iconset"></div>
+          <div class="motion" id="motion">
+            <h3>Movimento</h3>
+            <p class="mono">Entrada com fade + translateY, 600 ms, cubic-bezier(0.16, 1, 0.3, 1), 80 ms entre cards. Desligado com prefers-reduced-motion.</p>
+            <div class="motion__demo" aria-hidden="true"><i></i><i style="animation-delay:80ms"></i><i style="animation-delay:160ms"></i><i style="animation-delay:240ms"></i></div>
+            <button class="ghost" id="motion-play">Ver animação</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="engenharia">
+    <div class="wrap">
+      <div class="block__head">
+        <span class="eyebrow">Por baixo da página</span>
+        <h2>Engenharia</h2>
+      </div>
+      <div class="eng">
+        <article>
+          <h3>Tema sob medida</h3>
+          <ul>
+            <li>Templates PHP separados por seção em <code>template-parts/</code></li>
+            <li>CSS puro com tokens, mobile-first, ~1.000 linhas</li>
+            <li>Ícones SVG inline que herdam <code>currentColor</code></li>
+            <li>Ambiente local com Docker: WordPress, MySQL e WP-CLI</li>
+          </ul>
+        </article>
+        <article>
+          <h3>SEO técnico</h3>
+          <ul>
+            <li>Meta description, Open Graph e Twitter Card</li>
+            <li>JSON-LD <code>schema.org/Physician</code> na home</li>
+            <li>Sitemap XML nativo do WordPress</li>
+            <li><code>lang</code> e <code>dir</code> corretos por idioma</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Segurança</h3>
+          <ul>
+            <li>Editor de arquivos do painel desativado</li>
+            <li>XML-RPC desligado e versão do WP oculta</li>
+            <li>Usuários protegidos: REST API, páginas de autor e sitemap</li>
+            <li>Cabeçalhos de segurança HTTP enviados pelo tema</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Acessibilidade</h3>
+          <ul>
+            <li>Foco visível em dourado em todos os controles</li>
+            <li><code>aria-expanded</code> no menu mobile e no seletor de idioma</li>
+            <li>Respeita <code>prefers-reduced-motion</code></li>
+            <li>Seletor de idioma fecha com Esc ou clique fora</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="status">
+    <div class="wrap">
+      <div class="block__head">
+        <span class="eyebrow">Status</span>
+        <h2>O que já está pronto e o que vem a seguir</h2>
+      </div>
+      <div class="status">
+        <div class="panel">
+          <h3>Entregue</h3>
+          <ul>
+            <li><span class="pill pill--done">Pronto</span>Home completa: cabeçalho fixo, hero, sobre, procedimentos, chamada e rodapé</li>
+            <li><span class="pill pill--done">Pronto</span>Design system em CSS e animações de entrada</li>
+            <li><span class="pill pill--done">Pronto</span>Três idiomas com suporte a RTL</li>
+            <li><span class="pill pill--done">Pronto</span>Fotos reais do médico e da clínica</li>
+            <li><span class="pill pill--done">Pronto</span>Hardening inicial e SEO técnico</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Próximas fases</h3>
+          <ul>
+            <li><span class="pill pill--next">Próximo</span>Páginas internas: Sobre, Procedimentos, Clínica, Blog e Contato</li>
+            <li><span class="pill pill--next">Próximo</span>Tipo de post <code class="mono">procedimento</code> com campos personalizados</li>
+            <li><span class="pill pill--next">Próximo</span>Formulário de contato</li>
+            <li><span class="pill pill--next">Próximo</span>Política de Privacidade e Termos de Uso</li>
+            <li><span class="pill pill--next">Próximo</span>Imagens WebP/AVIF, cache e imagem de compartilhamento</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <span>Vitrine do projeto · tema WordPress para Dr. Rafael Sukiennik</span>
+    <span>Desenvolvimento: Thiago Alves · 2026</span>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Tela ampliada">
+  <button class="lightbox__close" id="lightbox-close">Fechar</button>
+  <img id="lightbox-img" src="" alt="Tela ampliada">
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // Lightbox
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lightbox-img');
+  var lastFocus = null;
+  function openLb(src) {
+    lastFocus = document.activeElement;
+    lbImg.src = src;
+    lbImg.classList.toggle('is-tall', src.indexOf('mob-') !== -1);
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lightbox-close').focus();
+  }
+  function closeLb() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+  document.addEventListener('click', function (e) {
+    var z = e.target.closest('.zoom');
+    if (z && z.dataset.full) openLb(z.dataset.full);
+  });
+  lb.addEventListener('click', function (e) { if (e.target !== lbImg) closeLb(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+
+  // Section tabs
+  var panes = {
+    'tab-hero':  { d: 'desk-hero-pt', m: 'mob-hero-pt',  u: '/', t: 'Hero', p: 'Título em Playfair sobre o creme da marca, foto do médico com degradê que funde a imagem ao fundo e dois caminhos claros: agendar pelo WhatsApp ou ver os procedimentos. No celular, a foto vem primeiro e o texto logo abaixo.' },
+    'tab-sobre': { d: 'desk-about-pt', m: 'mob-about-pt', u: '/#sobre', t: 'Sobre', p: 'Quatro diferenciais com ícones de traço abrem a seção. A biografia é longa, então ganhou subtítulos, largura de linha confortável e uma foto de procedimento que ocupa toda a altura ao lado do texto.' },
+    'tab-proc':  { d: 'desk-proc-pt', m: 'mob-proc-pt',  u: '/#procedimentos', t: 'Procedimentos', p: 'Oito procedimentos em grid de 4 colunas no desktop e uma no celular. Cada card tem o mesmo ritmo: ícone, nome e uma frase. Os cards entram em sequência, com 80 ms de intervalo.' },
+    'tab-cta':   { d: 'desk-cta-pt', m: 'mob-cta-pt',   u: '/#contato', t: 'Agendamento e rodapé', p: 'Uma faixa marinho com a chamada final e os dois canais de contato da clínica. O rodapé repete a navegação, lista os procedimentos e reúne telefone e e-mail.' },
+    'tab-menu':  { d: 'desk-lang-pt', m: 'mob-menu-pt',  u: '/', t: 'Menus', p: 'No desktop, o seletor de idioma abre um menu compacto ao lado do WhatsApp e do Instagram. No celular, o menu vira uma lista grande e fácil de tocar, que fecha ao escolher um destino.' }
+  };
+  var tabs = document.querySelectorAll('.tab');
+  function showPane(id) {
+    var c = panes[id];
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.id === id)); });
+    document.getElementById('pane').setAttribute('aria-labelledby', id);
+    document.getElementById('pane-desk').src = 'img/' + c.d + '.jpg';
+    document.getElementById('pane-desk').alt = c.t + ' em desktop';
+    document.getElementById('pane-desk-btn').dataset.full = 'img/' + c.d + '.jpg';
+    document.getElementById('pane-mob').src = 'img/' + c.m + '.jpg';
+    document.getElementById('pane-mob').alt = c.t + ' no celular';
+    document.getElementById('pane-mob-btn').dataset.full = 'img/' + c.m + '.jpg';
+    document.getElementById('pane-url').textContent = 'drrafaelsukiennik · ' + c.u;
+    document.getElementById('pane-title').textContent = c.t;
+    document.getElementById('pane-text').textContent = c.p;
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { showPane(t.id); });
+    t.addEventListener('keydown', function (e) {
+      var n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!n) return;
+      var next = tabs[(i + n + tabs.length) % tabs.length];
+      next.focus(); showPane(next.id);
+    });
+  });
+  showPane('tab-hero');
+
+  // Language switch
+  var notes = {
+    pt: 'Seletor de idioma no canto do cabeçalho. Sem plugin de tradução: um dicionário em inc/i18n.php.',
+    en: 'Os mesmos templates, com o texto do dicionário em inglês. Os títulos longos quebram em pontos definidos no próprio texto.',
+    he: 'Em hebraico, logo, menu, botões, foto e diferenciais trocam de lado. A ordem de leitura acompanha a direita para a esquerda.'
+  };
+  document.querySelectorAll('.lang').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var l = b.dataset.lang;
+      document.querySelectorAll('.lang').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      var src = 'img/desk-hero-' + l + '.jpg';
+      document.getElementById('lang-img').src = src;
+      document.getElementById('lang-btn').dataset.full = src;
+      document.getElementById('lang-url').textContent = 'drrafaelsukiennik · /?lang=' + l;
+      document.getElementById('lang-note').textContent = notes[l];
+    });
+  });
+
+  // Icon set (paths copied from inc/icons.php)
+  var icons = {
+    user: '<circle cx="12" cy="8.3" r="3.6"/><path d="M5 19.2c1.1-3.6 3.6-5.4 7-5.4s5.9 1.8 7 5.4"/>',
+    shield: '<path d="M12 3.2l7.2 2.6v5.6c0 4.9-3.1 8.3-7.2 9.4-4.1-1.1-7.2-4.5-7.2-9.4V5.8Z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/>',
+    lotus: '<path d="M12 19C9.8 15.5 9.8 9.5 12 6C14.2 9.5 14.2 15.5 12 19Z"/><path d="M12 19C8.5 17 6 13 5.3 9C8.8 9.7 11.3 13 12 19Z"/><path d="M12 19C15.5 17 18 13 18.7 9C15.2 9.7 12.7 13 12 19Z"/><path d="M8.3 19h7.4"/>',
+    clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3.2 2.1"/>',
+    botox: '<path d="M9.5 3.5h5"/><path d="M10.5 3.5v3.2h3V3.5"/><rect x="9.3" y="6.7" width="5.4" height="7.3" rx="0.9"/><path d="M9.6 9.4h4.8M9.6 11.7h4.8"/><path d="M12 14v6.5"/>',
+    preenchimento: '<path d="M4 12.3c2.6-2 4.6-2.6 8-2.6s5.4.6 8 2.6c-2.6 2-4.6 2.6-8 2.6s-5.4-.6-8-2.6Z"/><path d="M4.4 12.6c2 .8 3.9 1.2 7.6 1.2s5.6-.4 7.6-1.2"/>',
+    bioestim: '<circle cx="7" cy="7.5" r="2"/><circle cx="17" cy="7.5" r="2"/><circle cx="12" cy="16.5" r="2"/><path d="M8.6 8.9l2.5 5.8M15.4 8.9l-2.5 5.8M9 7.5h6"/>',
+    prp: '<path d="M12 3.5c3.2 4.2 5.7 8 5.7 11.2a5.7 5.7 0 1 1-11.4 0c0-3.2 2.5-7 5.7-11.2Z"/><circle cx="12" cy="15" r="1.7" fill="currentColor" stroke="none"/>',
+    laser: '<rect x="3.5" y="9.8" width="6" height="4.4" rx="1"/><path d="M9.5 12h3.5M14.5 12h5.5"/><path d="M17 8.8l1.6-1.6M17 15.2l1.6 1.6M20.5 12h1.2"/>',
+    iv: '<path d="M9.3 3.5h5.4"/><path d="M9.3 3.5v2.7a2.7 2.7 0 0 0 5.4 0V3.5"/><path d="M8.4 6.5h7.2l-1 7.8H9.4Z"/><path d="M12 14.3v6.2"/><circle cx="12" cy="10.5" r="0.6" fill="currentColor" stroke="none"/>',
+    globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.3 3.7 5.3 3.7 8.5s-1.3 6.2-3.7 8.5c-2.4-2.3-3.7-5.3-3.7-8.5S9.6 5.8 12 3.5Z"/>',
+    phone: '<path d="M6 4.5h2.6l1 3.6-1.8 1.4a10.5 10.5 0 0 0 4.7 4.7l1.4-1.8 3.6 1v2.6c0 1-.8 1.8-1.8 1.7A15 15 0 0 1 4.3 6.3C4.2 5.3 5 4.5 6 4.5Z"/>'
+  };
+  var set = document.getElementById('iconset');
+  Object.keys(icons).forEach(function (k) {
+    var d = document.createElement('div');
+    d.className = 'ic';
+    d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + icons[k] + '</svg><span>' + k + '</span>';
+    set.appendChild(d);
+  });
+
+  // Motion demo
+  var motion = document.getElementById('motion');
+  document.getElementById('motion-play').addEventListener('click', function () {
+    motion.classList.remove('is-playing');
+    void motion.offsetWidth;
+    motion.classList.add('is-playing');
+  });
+})();
+</script>
+
+</body>
+</html>
